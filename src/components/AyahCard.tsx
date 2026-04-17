@@ -1,11 +1,5 @@
 import type { Ayah, ReaderSettings } from "@/types/quran";
 import clsx from "clsx";
-import { motion } from "framer-motion";
-
-// Framer Motion's JSX generics can be strict depending on TS setup.
-// Cast to `any` for the MotionArticle wrapper so we can keep the semantic
-// <article> element and pass normal HTML props like `className`.
-const MotionArticle: any = motion.article as any;
 
 export function AyahCard({
   ayah,
@@ -42,16 +36,11 @@ export function AyahCard({
   };
 
   return (
-    <MotionArticle
+    <article
       onClick={onFocus}
       className={`reader-shell p-5 sm:p-6 transition-opacity duration-300 ${opacityClass} ${
         settings.readingMode ? "reading-mode" : ""
       }`}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      whileHover={{ scale: 1.01 }}
-      transition={{ duration: 0.42, ease: "easeOut" }}
     >
       <div className="mb-4 flex items-center justify-between gap-3">
         <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
@@ -98,6 +87,6 @@ export function AyahCard({
             ? (ayah.translationBn ?? ayah.translation)
             : ayah.translation}
       </p>
-    </MotionArticle>
+    </article>
   );
 }

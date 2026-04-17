@@ -36,18 +36,20 @@ export function SurahClient({ surahNumber }: { surahNumber: number }) {
         if (mounted) {
           setSurah(sData || null);
           // dedupe ayahs by id in case the backend returns duplicates
-          const unique: Record<string, any> = {};
-          const deduped = (aData || []).filter((a: any) => {
-            if (!a || !a.id) return false;
-            if (unique[a.id]) return false;
-            unique[a.id] = true;
-            return true;
-          });
+          const unique: Record<string, boolean> = {};
+          const deduped = (Array.isArray(aData) ? aData : []).filter(
+            (a: Ayah | null | undefined) => {
+              if (!a || !a.id) return false;
+              if (unique[a.id]) return false;
+              unique[a.id] = true;
+              return true;
+            },
+          );
           setAyahs(deduped);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Failed to load surah/ayahs", err);
-        if (mounted) setError(String(err?.message ?? err));
+        if (mounted) setError(err instanceof Error ? err.message : String(err));
       } finally {
         if (mounted) setLoading(false);
       }

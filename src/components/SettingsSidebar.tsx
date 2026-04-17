@@ -15,13 +15,10 @@ export function SettingsSidebar({ onChange, hideTrigger }: Props) {
   const [settings, setSettings] = useState<ReaderSettings>(defaultSettings);
 
   useEffect(() => {
-    // Run once on mount to load persisted settings. Do not include `onChange`
-    // in deps because callers may pass an inline callback which would cause
-    // this effect to re-run and can create update loops.
     const stored = loadSettings();
     setSettings(stored);
     if (onChange) onChange(stored);
-  }, []);
+  }, [onChange]);
 
   // Listen for a global "settings:open" event so other UI (like Navbar)
   // can open the sidebar without coupling.
@@ -40,7 +37,7 @@ export function SettingsSidebar({ onChange, hideTrigger }: Props) {
       window.dispatchEvent(
         new CustomEvent("settings:change", { detail: next }),
       );
-    } catch (err) {
+    } catch {
       /* ignore on server or if dispatch fails */
     }
   };
@@ -89,7 +86,8 @@ export function SettingsSidebar({ onChange, hideTrigger }: Props) {
                   onChange={(e) =>
                     updateSettings({
                       ...settings,
-                      translationLanguage: e.target.value as any,
+                      translationLanguage:
+                        e.target.value as ReaderSettings["translationLanguage"],
                     })
                   }
                   className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none ring-0 transition focus:border-emerald-400"

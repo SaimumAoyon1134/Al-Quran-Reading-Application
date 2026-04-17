@@ -136,11 +136,11 @@ export default function SearchClient() {
         if (!cancelled) {
           setResults(items.slice(0, 50));
         }
-      } catch (err: any) {
-        if (err?.name === "AbortError") return;
+      } catch (err: unknown) {
+        if (err instanceof DOMException && err.name === "AbortError") return;
         if (!cancelled) {
           setResults([]);
-          setError(String(err?.message ?? err));
+          setError(err instanceof Error ? err.message : String(err));
         }
       } finally {
         if (!cancelled) setLoading(false);

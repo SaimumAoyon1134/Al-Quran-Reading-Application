@@ -45,7 +45,7 @@ export function SurahReader({ surah, ayahs }: { surah: Surah; ayahs: Ayah[] }) {
       });
       // programmatically focus (div has tabIndex=-1)
       el.focus?.();
-    } catch (err) {
+    } catch {
       // ignore
     }
   }, [focusedId]);
@@ -77,7 +77,7 @@ export function SurahReader({ surah, ayahs }: { surah: Surah; ayahs: Ayah[] }) {
         </section>
 
         <div className="space-y-4">
-          {ayahs.map((ayah, idx) => (
+          {ayahs.map((ayah) => (
             <div key={ayah.id} id={`ayah-${ayah.id}`} tabIndex={-1}>
               <AyahCard
                 ayah={ayah}
