@@ -1,6 +1,6 @@
 # Quran Reader App
 
-A responsive Quran reading app built with **Next.js**, **Tailwind CSS**, and static JSON data.
+A responsive Quran reading app built with **Next.js**, **Tailwind CSS*.
 
 ## Features
 
