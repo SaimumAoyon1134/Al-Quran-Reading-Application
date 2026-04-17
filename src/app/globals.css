@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+/* Glass UI variables and helpers */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-weak: rgba(255, 255, 255, 0.28);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply min-h-screen bg-stone-50 text-stone-900;
+  background-image:
+    radial-gradient(
+      circle at top left,
+      rgba(16, 185, 129, 0.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(20, 184, 166, 0.12),
+      transparent 22%
+    ),
+    linear-gradient(180deg, #f8fafc 0%, #f7f3ed 45%, #f8fafc 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgba(231, 229, 228, 0.8);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.35);
+}
+
+input[type="range"] {
+  accent-color: rgb(5 150 105);
+}
+
+.reader-shell {
+  @apply relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/80 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.35)] backdrop-blur;
+}
+
+.glass-panel {
+  /* translucent card with subtle border and backdrop blur */
+  @apply rounded-2xl border bg-white/30 border-white/40 shadow-md backdrop-blur-md overflow-hidden;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.36),
+    rgba(255, 255, 255, 0.12)
+  );
+}
+
+.glass-card {
+  /* Don't @apply `group` (Tailwind doesn't allow it). Add `group` on the element when needed. */
+  @apply rounded-2xl border bg-white/30 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md backdrop-blur-sm;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.glass-navbar {
+  @apply sticky top-0 z-40 border-b bg-white/40 backdrop-blur-md;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.glass-panel-strong {
+  @apply bg-white/60 border-white/60 shadow-lg backdrop-blur-md;
+}
+
+.glow-ring {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.65),
+    0 18px 45px -28px rgba(5, 150, 105, 0.35);
+}
+
+.mashq-pattern {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.88),
+      rgba(255, 255, 255, 0.72)
+    ),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(16, 185, 129, 0.12),
+      transparent 32%
+    ),
+    radial-gradient(circle at 80% 10%, rgba(245, 158, 11, 0.1), transparent 25%);
+}
+
+/* per-word hover styling in reading mode */
+.reading-mode .word {
+  transition:
+    color 160ms ease,
+    background-color 120ms ease;
+  cursor: pointer;
+}
+.reading-mode .word:hover {
+  color: rgb(5 150 105); /* emerald-600 */
+  background-color: rgba(5, 150, 105, 0.06);
+}
