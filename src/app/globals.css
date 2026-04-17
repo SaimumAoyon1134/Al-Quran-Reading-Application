@@ -107,15 +107,3 @@ input[type="range"] {
     ),
     radial-gradient(circle at 80% 10%, rgba(245, 158, 11, 0.1), transparent 25%);
 }
-
-/* per-word hover styling in reading mode */
-.reading-mode .word {
-  transition:
-    color 160ms ease,
-    background-color 120ms ease;
-  cursor: pointer;
-}
-.reading-mode .word:hover {
-  color: rgb(5 150 105); /* emerald-600 */
-  background-color: rgba(5, 150, 105, 0.06);
-}

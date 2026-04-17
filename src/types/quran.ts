@@ -27,5 +27,5 @@ export type ReaderSettings = {
   // translation language to show under each ayah. 'bn' = Bangla, 'en' = English
   translationLanguage: "bn" | "en";
   // when true, enable reading mode where the focused ayah is emphasized
-  readingMode?: boolean;
+  readingMode: boolean; // default should be false
 };

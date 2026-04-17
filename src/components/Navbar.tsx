@@ -4,26 +4,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/Container";
-import { loadSettings, saveSettings } from "@/lib/settings";
-import type { ReaderSettings } from "@/types/quran";
+import { loadSettings } from "@/lib/settings";
 
 export function Navbar() {
-  const [settings, setSettings] = useState<ReaderSettings | null>(null);
+  const [settings, setSettings] = useState<any>(null);
 
   useEffect(() => {
     const s = loadSettings();
     setSettings(s);
   }, []);
-
-  const toggleReadingMode = () => {
-    const next: ReaderSettings = {
-      ...(settings || ({} as ReaderSettings)),
-      readingMode: !settings?.readingMode,
-    };
-    setSettings(next);
-    saveSettings(next);
-    window.dispatchEvent(new CustomEvent("settings:change", { detail: next }));
-  };
 
   return (
     <header className="glass-navbar">
@@ -51,17 +40,6 @@ export function Navbar() {
               className="inline-flex items-center justify-center rounded-full p-2 md:hidden bg-white/70 hover:bg-white/80"
             >
               <SlidersHorizontal size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={toggleReadingMode}
-              className={`rounded-full px-3 py-1 text-sm font-semibold transition ${
-                settings?.readingMode
-                  ? "bg-emerald-600 text-white"
-                  : "bg-white/70 text-stone-800"
-              }`}
-            >
-              {settings?.readingMode ? "Reading: ON" : "Reading: OFF"}
             </button>
           </nav>
         </div>

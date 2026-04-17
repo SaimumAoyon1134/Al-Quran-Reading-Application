@@ -73,6 +73,10 @@ const quickSuggestions = [
   "রহমত",
 ];
 
+function isBanglaQuery(query: string) {
+  return /[\u0980-\u09FF]/.test(query);
+}
+
 function getEnglishTranslation(result: SearchResult) {
   return typeof result.englishTranslation === "string"
     ? result.englishTranslation.trim()
@@ -156,6 +160,7 @@ export default function SearchClient() {
   }, [trimmedQuery]);
 
   const hasQuery = query.trim().length > 0;
+  const queryLooksBangla = isBanglaQuery(trimmedQuery);
 
   return (
     <div className="space-y-6  max-w-3xl mx-auto ">
@@ -335,25 +340,57 @@ export default function SearchClient() {
             </div>
 
             <div className="mt-4 space-y-3">
-              <div>
-                <p className="leading-8 text-stone-700">
-                  {highlightText(
-                    result.translationBn || result.translation,
-                    trimmedQuery,
-                  )}
-                </p>
-              </div>
+              {queryLooksBangla ? (
+                <>
+                  <div>
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">
+                      Bangla
+                    </p>
+                    <p className="leading-8 text-stone-700">
+                      {highlightText(
+                        result.translationBn || result.translation,
+                        trimmedQuery,
+                      )}
+                    </p>
+                  </div>
 
-              {getEnglishTranslation(result) ? (
-                <div>
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">
-                    English
-                  </p>
-                  <p className="rounded-2xl bg-stone-50 px-4 py-3 text-sm leading-7 text-stone-600">
-                    {highlightText(getEnglishTranslation(result), trimmedQuery)}
-                  </p>
-                </div>
-              ) : null}
+                  {getEnglishTranslation(result) ? (
+                    <div>
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">
+                        English
+                      </p>
+                      <p className="rounded-2xl bg-stone-50 px-4 py-3 text-sm leading-7 text-stone-600">
+                        {highlightText(
+                          getEnglishTranslation(result),
+                          trimmedQuery,
+                        )}
+                      </p>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <div>
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">
+                      English
+                    </p>
+                    <p className="leading-8 text-stone-700">
+                      {highlightText(result.translation, trimmedQuery)}
+                    </p>
+                  </div>
+
+                  {result.translationBn ? (
+                    <div>
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">
+                        Bangla
+                      </p>
+                      <p className="rounded-2xl bg-stone-50 px-4 py-3 text-sm leading-7 text-stone-600">
+                        {highlightText(result.translationBn, trimmedQuery)}
+                      </p>
+                    </div>
+                  ) : null}
+                </>
+              )}
             </div>
           </Link>
         ))}
