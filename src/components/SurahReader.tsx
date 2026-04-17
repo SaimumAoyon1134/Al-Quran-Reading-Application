@@ -8,7 +8,6 @@ import type { Ayah, ReaderSettings, Surah } from "@/types/quran";
 
 export function SurahReader({ surah, ayahs }: { surah: Surah; ayahs: Ayah[] }) {
   const [settings, setSettings] = useState<ReaderSettings>(defaultSettings);
-  const [focusedId, setFocusedId] = useState<string | null>(null);
 
   // listen for settings changes dispatched from other UI (like Navbar)
   useEffect(() => {
@@ -21,34 +20,6 @@ export function SurahReader({ surah, ayahs }: { surah: Surah; ayahs: Ayah[] }) {
     return () =>
       window.removeEventListener("settings:change", handler as EventListener);
   }, []);
-
-  // when readingMode is enabled, focus the first ayah if none focused
-  useEffect(() => {
-    if (settings?.readingMode && !focusedId && ayahs.length > 0) {
-      setFocusedId(ayahs[0].id);
-    }
-  }, [settings, focusedId, ayahs]);
-
-  // scroll the focused ayah into view and focus it (for accessibility)
-  useEffect(() => {
-    if (!focusedId) return;
-    try {
-      const el = document.getElementById(
-        `ayah-${focusedId}`,
-      ) as HTMLElement | null;
-      if (!el) return;
-      // smooth center the focused ayah
-      el.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "nearest",
-      });
-      // programmatically focus (div has tabIndex=-1)
-      el.focus?.();
-    } catch {
-      // ignore
-    }
-  }, [focusedId]);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
@@ -78,13 +49,8 @@ export function SurahReader({ surah, ayahs }: { surah: Surah; ayahs: Ayah[] }) {
 
         <div className="space-y-4">
           {ayahs.map((ayah) => (
-            <div key={ayah.id} id={`ayah-${ayah.id}`} tabIndex={-1}>
-              <AyahCard
-                ayah={ayah}
-                settings={settings}
-                focused={focusedId ? focusedId === ayah.id : false}
-                onFocus={() => setFocusedId(ayah.id)}
-              />
+            <div key={ayah.id} id={`ayah-${ayah.id}`}>
+              <AyahCard ayah={ayah} settings={settings} />
             </div>
           ))}
         </div>

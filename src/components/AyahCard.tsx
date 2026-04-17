@@ -4,20 +4,10 @@ import clsx from "clsx";
 export function AyahCard({
   ayah,
   settings,
-  focused,
-  onFocus,
 }: {
   ayah: Ayah;
   settings: ReaderSettings;
-  focused?: boolean;
-  onFocus?: () => void;
 }) {
-  const opacityClass = settings.readingMode
-    ? focused
-      ? "opacity-100"
-      : "opacity-30"
-    : "opacity-100";
-
   // helper to split a text into words and wrap non-space tokens in spans so
   // individual words can be hovered. We keep whitespace tokens as-is so
   // spacing/punctuation remains intact.
@@ -28,7 +18,7 @@ export function AyahCard({
     return tokens.map((t, i) => {
       if (/^\s+$/.test(t)) return t;
       return (
-        <span key={i} className={tokenClass ?? "word inline"}>
+        <span key={i} className={tokenClass ?? "inline"}>
           {t}
         </span>
       );
@@ -36,12 +26,7 @@ export function AyahCard({
   };
 
   return (
-    <article
-      onClick={onFocus}
-      className={`reader-shell p-5 sm:p-6 transition-opacity duration-300 ${opacityClass} ${
-        settings.readingMode ? "reading-mode" : ""
-      }`}
-    >
+    <article className="reader-shell p-5 sm:p-6">
       <div className="mb-4 flex items-center justify-between gap-3">
         <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
           {ayah.surahNumber}:{ayah.ayahNumber}
@@ -59,16 +44,12 @@ export function AyahCard({
         style={{ fontSize: `${settings.arabicFontSize}px` }}
         dir="rtl"
       >
-        {settings.readingMode
-          ? renderTokenized(ayah.arabic, "word inline")
-          : ayah.arabic}
+        {ayah.arabic}
       </p>
 
       {ayah.transliteration ? (
         <p className="mb-4 rounded-2xl bg-stone-50 px-4 py-3 text-sm italic leading-7 text-stone-600">
-          {settings.readingMode
-            ? renderTokenized(ayah.transliteration, "word inline")
-            : ayah.transliteration}
+          {ayah.transliteration}
         </p>
       ) : null}
 
@@ -76,16 +57,9 @@ export function AyahCard({
         className="leading-8 text-stone-700"
         style={{ fontSize: `${settings.translationFontSize}px` }}
       >
-        {settings.readingMode
-          ? renderTokenized(
-              settings.translationLanguage === "bn"
-                ? (ayah.translationBn ?? ayah.translation)
-                : ayah.translation,
-              "word inline text-stone-700",
-            )
-          : settings.translationLanguage === "bn"
-            ? (ayah.translationBn ?? ayah.translation)
-            : ayah.translation}
+        {settings.translationLanguage === "bn"
+          ? (ayah.translationBn ?? ayah.translation)
+          : ayah.translation}
       </p>
     </article>
   );
