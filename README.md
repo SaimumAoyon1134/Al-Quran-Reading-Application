@@ -19,8 +19,8 @@ A responsive Quran reading app built with **Next.js**, **Tailwind CSS**, and sta
 
 - **Frontend:** Next.js (App Router)
 - **Styling:** Tailwind CSS
-- **Data:** Local JSON files inside `src/data`
-- **Optional Data Prep Script:** TypeScript script to normalize an external Quran dataset
+- **Backend** `https://al-quran-backend-opal.vercel.app`
+
 
 ## Project Structure
 
@@ -50,41 +50,5 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## Important
 
-This starter includes **sample Quran data only** so the app works immediately.
-Before submission, replace the sample files with a **complete 114-surah dataset**.
 
-Files to replace:
-
-- `src/data/surahs.json`
-- `src/data/ayahs.json`
-- `src/data/search-index.json`
-
-## Preparing Full Quran Data
-
-You can use a public Quran JSON source and normalize it with the included script.
-
-Example:
-
-```bash
-QURAN_SOURCE_URL="https://raw.githubusercontent.com/malekverse/quran-dataset/main/quran_dataset.json" npm run prepare:data
-```
-
-If your chosen dataset shape differs, adjust `scripts/build-quran-data.ts`.
-
-## Deployment
-
-Deploy to **Vercel** or **Netlify**.
-
-## Submission Checklist
-
-- GitHub repo is public
-- Live demo is public
-- Verify demo in incognito mode
-- Replace sample data with all 114 surahs
-- Add proper dataset attribution in README
-
-## Suggested Attribution
-
-If you use a public Quran dataset, mention the dataset repository and license clearly in the README.
